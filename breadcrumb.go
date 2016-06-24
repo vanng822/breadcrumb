@@ -62,14 +62,15 @@ func (bc *BreadCrumb) Render() string {
 		html += "<a href=\"" + bc.Items[0].Url() + "\" rel=\"v:url\" property=\"v:title\">"
 		html += bc.Items[0].Text()
 		html += "</a>"
+
+		html += bc.Separator
+		var i int
+		for i = 1; i < noOfItems-1; i++ {
+			html += bc.renderChild(i)
+			endspans += "</span></span>"
+		}
+		endspans += "</span>"
 		if noOfItems > 1 {
-			html += bc.Separator
-			var i int
-			for i = 1; i < noOfItems-1; i++ {
-				html += bc.renderChild(i)
-				endspans += "</span>"
-			}
-			endspans += "</span>"
 			html += bc.Items[i].Text()
 		}
 		html += endspans
