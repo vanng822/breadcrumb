@@ -3,6 +3,7 @@ package breadcrumb
 import (
 	"html/template"
 	"fmt"
+	"strings"
 )
 
 type BreadCrumbItem interface {
@@ -50,18 +51,19 @@ func (bc *BreadCrumb) renderItem(index int, separator string) string {
 }
 
 func (bc *BreadCrumb) Render() string {
-	var html string
 	noOfItems := len(bc.Items)
 	if noOfItems > 0 {
-		html += "<ol itemscope itemtype=\"http://schema.org/BreadcrumbList\">"
-		html += bc.renderItem(0, "")
+		html := make([]string, noOfItems + 2)
+		html[0] = "<ol itemscope itemtype=\"http://schema.org/BreadcrumbList\">"
+		html[1] = bc.renderItem(0, "")
 		var i int
 		for i = 1; i < noOfItems; i++ {
-			html += bc.renderItem(i, bc.Separator)
+			html[i+1] = bc.renderItem(i, bc.Separator)
 		}
-		html += "</ol>"
+		html[i+1] = "</ol>"
+		return strings.Join(html, "")
 	}
-	return html
+	return ""
 }
 
 func RenderBreadCrumb(breabcrumb *BreadCrumb) template.HTML {
