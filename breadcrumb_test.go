@@ -24,7 +24,7 @@ func TestNewItem(t *testing.T) {
 }
 
 func TestBreadcrumb2(t *testing.T) {
-  expected := "<div xmlns:v=\"http://rdf.data-vocabulary.org/#\"><span typeof=\"v:Breadcrumb\"><a href=\"url.tld/parent\" rel=\"v:url\" property=\"v:title\">parent</a>><span rel=\"v:child\"><span typeof=\"v:Breadcrumb\"><a href=\"url.tld/child\" rel=\"v:url\" property=\"v:title\">child</a>>child2</span></span></span></div>"
+  expected := "<ol itemscope itemtype=\"http://schema.org/BreadcrumbList\">\n\t\t<li itemprop=\"itemListElement\" itemscope itemtype=\"http://schema.org/ListItem\">\n\t\t\t<a itemprop=\"item\" href=\"url.tld/parent\"><span itemprop=\"name\">parent</span></a>\n\t\t\t<meta itemprop=\"position\" content=\"1\" />\n\t\t</li>\n\t\t<li itemprop=\"itemListElement\" itemscope itemtype=\"http://schema.org/ListItem\">\n\t\t\t><a itemprop=\"item\" href=\"url.tld/child\"><span itemprop=\"name\">child</span></a>\n\t\t\t<meta itemprop=\"position\" content=\"2\" />\n\t\t</li>\n\t\t<li itemprop=\"itemListElement\" itemscope itemtype=\"http://schema.org/ListItem\">\n\t\t\t><a itemprop=\"item\" href=\"url.tld/child2\"><span itemprop=\"name\">child2</span></a>\n\t\t\t<meta itemprop=\"position\" content=\"3\" />\n\t\t</li></ol>"
   bc := New("", ">", []BreadCrumbItem{
     NewItem("parent", "url.tld/parent"),
     NewItem("child", "url.tld/child"),
@@ -33,7 +33,7 @@ func TestBreadcrumb2(t *testing.T) {
 }
 
 func TestBreadcrumb3(t *testing.T) {
-  expected := "<div xmlns:v=\"http://rdf.data-vocabulary.org/#\"><span typeof=\"v:Breadcrumb\"><a href=\"url.tld/parent\" rel=\"v:url\" property=\"v:title\">parent</a>><span rel=\"v:child\"><span typeof=\"v:Breadcrumb\"><a href=\"url.tld/child\" rel=\"v:url\" property=\"v:title\">child</a>><span rel=\"v:child\"><span typeof=\"v:Breadcrumb\"><a href=\"url.tld/child2\" rel=\"v:url\" property=\"v:title\">child2</a>>child3</span></span></span></span></span></div>"
+  expected := "<ol itemscope itemtype=\"http://schema.org/BreadcrumbList\">\n\t\t<li itemprop=\"itemListElement\" itemscope itemtype=\"http://schema.org/ListItem\">\n\t\t\t<a itemprop=\"item\" href=\"url.tld/parent\"><span itemprop=\"name\">parent</span></a>\n\t\t\t<meta itemprop=\"position\" content=\"1\" />\n\t\t</li>\n\t\t<li itemprop=\"itemListElement\" itemscope itemtype=\"http://schema.org/ListItem\">\n\t\t\t><a itemprop=\"item\" href=\"url.tld/child\"><span itemprop=\"name\">child</span></a>\n\t\t\t<meta itemprop=\"position\" content=\"2\" />\n\t\t</li>\n\t\t<li itemprop=\"itemListElement\" itemscope itemtype=\"http://schema.org/ListItem\">\n\t\t\t><a itemprop=\"item\" href=\"url.tld/child2\"><span itemprop=\"name\">child2</span></a>\n\t\t\t<meta itemprop=\"position\" content=\"3\" />\n\t\t</li>\n\t\t<li itemprop=\"itemListElement\" itemscope itemtype=\"http://schema.org/ListItem\">\n\t\t\t><a itemprop=\"item\" href=\"url.tld/child3\"><span itemprop=\"name\">child3</span></a>\n\t\t\t<meta itemprop=\"position\" content=\"4\" />\n\t\t</li></ol>"
   bc := New("", ">", []BreadCrumbItem{
     NewItem("parent", "url.tld/parent"),
     NewItem("child", "url.tld/child"),
@@ -45,7 +45,7 @@ func TestBreadcrumb3(t *testing.T) {
 func TestBreadCrumbSingle(t *testing.T) {
   bc := New("", ">", []BreadCrumbItem{
     NewItem("parent", "url.tld/parent"),})
-	expected := "<div xmlns:v=\"http://rdf.data-vocabulary.org/#\"><span typeof=\"v:Breadcrumb\"><a href=\"url.tld/parent\" rel=\"v:url\" property=\"v:title\">parent</a>></span></div>"
+	expected := "<ol itemscope itemtype=\"http://schema.org/BreadcrumbList\">\n\t\t<li itemprop=\"itemListElement\" itemscope itemtype=\"http://schema.org/ListItem\">\n\t\t\t<a itemprop=\"item\" href=\"url.tld/parent\"><span itemprop=\"name\">parent</span></a>\n\t\t\t<meta itemprop=\"position\" content=\"1\" />\n\t\t</li></ol>"
   assert.Equal(t, expected, bc.Render())
 }
 
