@@ -1,2 +1,2 @@
 # breadcrumb
-simple breadcrumb for rdf.data-vocabulary.org
+simple breadcrumb for http://schema.org/BreadcrumbList
